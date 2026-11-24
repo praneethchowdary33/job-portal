@@ -1,0 +1,27 @@
+{% extends 'jobs/base.html' %}
+{% block content %}
+<h3>Applications: {{ job.title }}</h3>
+<table class="table">
+    <tr><th>Applicant</th><th>Email</th><th>Resume</th><th>Status</th><th>Change</th></tr>
+    {% for a in applications %}
+    <tr>
+        <td>{{ a.applicant.username }}</td>
+        <td>{{ a.applicant.email }}</td>
+        <td><a href="{{ a.resume.url }}" target="_blank">View</a></td>
+        <td>{{ a.status }}</td>
+        <td>
+            <form method="post" class="d-flex gap-1">
+                {% csrf_token %}
+                <input type="hidden" name="app_id" value="{{ a.pk }}">
+                <select name="status" class="form-select form-select-sm">
+                    <option>Applied</option><option>Shortlisted</option><option>Rejected</option>
+                </select>
+                <button class="btn btn-sm btn-primary">Save</button>
+            </form>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No applicants yet.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

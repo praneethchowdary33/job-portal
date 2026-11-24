@@ -1,0 +1,18 @@
+{% extends 'jobs/base.html' %}
+{% block content %}
+<h3>{{ job.title }}</h3>
+<p>{{ job.company }} | {{ job.location }} | {{ job.get_job_type_display }}</p>
+<p><b>Salary:</b> {{ job.salary|default:"Not mentioned" }}</p>
+<p><b>Skills:</b> {{ job.skills }}</p>
+{{ job.description|linebreaks }}
+
+{% if not user.is_authenticated %}
+    <a class="btn btn-primary" href="{% url 'login' %}">Login to apply</a>
+{% elif is_recruiter %}
+    <p class="text-muted">Recruiters cannot apply.</p>
+{% elif applied %}
+    <button class="btn btn-secondary" disabled>Already Applied</button>
+{% else %}
+    <a class="btn btn-success" href="{% url 'apply_job' job.pk %}">Apply Now</a>
+{% endif %}
+{% endblock %}

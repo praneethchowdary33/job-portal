@@ -1,0 +1,20 @@
+{% extends 'jobs/base.html' %}
+{% block content %}
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-5"><input name="q" value="{{ q }}" class="form-control" placeholder="Role or skill"></div>
+    <div class="col-md-4"><input name="location" value="{{ location }}" class="form-control" placeholder="Location"></div>
+    <div class="col-md-3"><button class="btn btn-primary w-100">Search</button></div>
+</form>
+
+{% for job in jobs %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5><a href="{% url 'job_detail' job.pk %}" class="text-decoration-none">{{ job.title }}</a></h5>
+        <p class="mb-1">{{ job.company }} | {{ job.location }} | {{ job.get_job_type_display }}</p>
+        <p class="text-muted mb-0">Skills: {{ job.skills }}</p>
+    </div>
+</div>
+{% empty %}
+<p>No jobs found.</p>
+{% endfor %}
+{% endblock %}
