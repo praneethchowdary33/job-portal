@@ -35,8 +35,13 @@ class JobForm(forms.ModelForm):
     class Meta:
         model = Job
         fields = ['title', 'company', 'location', 'salary', 'skills', 'job_type', 'description']
-
-
+        labels = {
+            'salary': 'Package',
+        }
+        help_texts = {
+            'skills': '',
+        }
+        
 class ApplicationForm(forms.ModelForm):
     class Meta:
         model = Application
